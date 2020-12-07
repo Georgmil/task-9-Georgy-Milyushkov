@@ -38,29 +38,34 @@ void task1(){
 		}
 	}
 	
-	int t = 0, g = 0;
-	printf("\n");
-	printf("Converted to one dimenssional array is:\n");
+	//int t = 0, g = 0;
 	for(int q = 0; q < lenc; q++) {
 		for (int w = 0; w < lenr; w++) {
-			B[t] = A[q][w];
-			printf(" %d ", B[t]);
-			t++;
+			B[(q * lenr) + w] = A[q][w];
 		}
 	}
+
+	printf("\n");
+	printf("Converted to one dimenssional array is:\n");
+	for (int i = 0; i < (lenc * lenr); i++) {
+		printf("%d ", B[i]);
+	}
 	
+	int g;
+	for (int i = 0; i < lenc * lenr; i++) {
+		g = i / lenr;
+		B[i] = A[g][g * lenr - i];
+	}
+
 	printf("\n");
 	printf("Converted back is:\n");
-	for (int a = 0; a < lenc; a++) {
-		for (int b = 0; b < lenr; b++) {
-			A[a][b] = B[g];
-			g++;
-			printf(" %d ", A[a][b]);
-			if (b == lenr - 1)
+	for (int i = 0; i < lenc; i++) {
+		for (int j = 0; j < lenr; j++) {
+			printf("%d  ", A[i][j]);
+			if (j == lenr - 1)
 				printf("\n");
 		}
 	}
-	
 
 }
 
@@ -193,12 +198,34 @@ void task5() {
 	}
 
 
+	int max,c;
+	for (int i = 1; i <= n; i++) {
+		max = 0;
+		if (list1[i][i] == 0) {
+
+			for (int j = 1; j <= n; j++) {
+				if (list1[j][i] > max)
+					max = j;
+			}
+			for (int t = 1; t <= n + 1; t++) {
+				c = list1[i][t];
+				list1[i][t] = list1[max][t];
+				list1[max][t] = c;
+			}
+		}
+
+	}
+
+
+
+
+
 
 
 	for (int i = 1; i <=n-1; i++) {
 
 		if (list1[i][i]==0.0) {
-			printf("Cannot slove");
+			printf("cannot slove");
 			break;
 		}
 		for (int j = i + 1; j <= n; j++) {
@@ -255,6 +282,10 @@ void task6() {
 		dop[i] = (float*)malloc(n * sizeof(float));
 	}
 
+
+
+
+
 	for (int i = 0; i < n; i++) {
 		printf("Please enter the %d st row of n elements:\n", i + 1);
 		for (int j = 0; j < n; j++) {
@@ -263,6 +294,38 @@ void task6() {
 			dop[i][j] = q;
 		}
 	}
+	printf("Iznachalnaja matrica:\n");
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			printf("%.f  ", ori[i][j]);
+			if (j == n - 1)
+				printf("\n");
+		}
+	}
+
+	int max1, c1;
+	for (int i = 0; i < n; i++) {
+		max1 = 0;
+		if (ori[i][i]==0) {
+
+			for (int j = 0; j < n; j++) {
+				if (ori[j][i] > max1)
+					max1 = j;
+			}
+			for (int t = 0; t < n; t++) {
+				c1 = ori[i][t];
+				ori[i][t] = ori[max1][t];
+				dop[i][t] = dop[max1][t];
+				ori[max1][t] = c1;
+				dop[max1][t] = c1;
+			}
+		}
+
+	}
+
+
+
+
 
 
 	for (int i = 0; i < n; i++) {
@@ -299,7 +362,7 @@ void task6() {
 
 
 	}
-	printf("Iznachalnaja matrica:\n");
+	printf("matrica posle perestanovki(ulutsjaem ee):\n");
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			printf("%.f  ", dop[i][j]);
