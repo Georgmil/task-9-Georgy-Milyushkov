@@ -51,10 +51,8 @@ void task1(){
 		printf("%d ", B[i]);
 	}
 	
-	int g;
 	for (int i = 0; i < lenc * lenr; i++) {
-		g = i / lenr;
-		B[i] = A[g][g * lenr - i];
+		A[i / lenr][i % lenr] = B[i];
 	}
 
 	printf("\n");
@@ -303,25 +301,7 @@ void task6() {
 		}
 	}
 
-	int max1, c1;
-	for (int i = 0; i < n; i++) {
-		max1 = 0;
-		if (ori[i][i]==0) {
-
-			for (int j = 0; j < n; j++) {
-				if (ori[j][i] > max1)
-					max1 = j;
-			}
-			for (int t = 0; t < n; t++) {
-				c1 = ori[i][t];
-				ori[i][t] = ori[max1][t];
-				dop[i][t] = dop[max1][t];
-				ori[max1][t] = c1;
-				dop[max1][t] = c1;
-			}
-		}
-
-	}
+	
 
 
 
@@ -339,6 +319,29 @@ void task6() {
 		}
 	}
 
+	int max1, c1,c2;
+	for (int i = 0; i < n; i++) {
+		max1 = 0;
+		if (ori[i][i] == 0) {
+
+			for (int j = 0; j < n; j++) {
+				if (ori[j][i] > max1)
+					max1 = j;
+			}
+			for (int t = 0; t < n; t++) {
+				c1 = ori[i][t];
+				c2 = obr[i][t]; //
+				ori[i][t] = ori[max1][t];
+				//dop[i][t] = dop[max1][t]; //
+				obr[i][t] = obr[max1][t];
+				ori[max1][t] = c1;
+				//dop[max1][t] = c1; // 
+				obr[max1][t] = c2;
+			}
+		}
+
+	}
+	
 	for (int a = 0; a < n; a++) {
 
 
@@ -359,17 +362,17 @@ void task6() {
 			}
 		}
 
-
-
 	}
-	printf("matrica posle perestanovki(ulutsjaem ee):\n");
+
+
+	/*printf("matrica posle perestanovki(ulutsjaem ee):\n");
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			printf("%.f  ", dop[i][j]);
 			if (j == n - 1)
 				printf("\n");
 		}
-	}
+	}*/
 	printf("\n");
 	printf("Obratnaja matrica:\n");
 	for (int i = 0; i < n; i++) {
